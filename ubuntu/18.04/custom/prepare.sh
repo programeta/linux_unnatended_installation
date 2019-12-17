@@ -34,7 +34,7 @@ curl -L "https://github.com/docker/compose/releases/download/1.24.0/docker-compo
 chmod +x /usr/local/bin/docker-compose
 
 ##Add docker user (Create user, add Keygen, add Samba)
-useradd docker -g docker -m -s /bin/bash
+useradd docker -u 1000 -g docker -m -s /bin/bash
 echo docker:docker | chpasswd
 usermod -aG docker docker
 usermod -aG sudo docker
@@ -53,7 +53,7 @@ cat <<EOT >> /etc/samba/smb.conf
 
 [docker_projects]
     comment = Docker projects
-    path = /media/data/docker_projects    
+    path = /media/data/docker_projects
     browseable = yes
     writeable = yes
     guest ok = yes
