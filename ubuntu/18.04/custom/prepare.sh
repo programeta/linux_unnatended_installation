@@ -53,7 +53,8 @@ cat <<EOT >> /etc/samba/smb.conf
 
 [docker_projects]
     comment = Docker projects
-    path = /media/data/docker_projects    browseable = yes
+    path = /media/data/docker_projects    
+    browseable = yes
     writeable = yes
     guest ok = yes
     create mask = 0777
@@ -70,7 +71,6 @@ network:
       dhcp4: no
       dhcp6: no
       addresses: [192.168.18.100/24]
-      gateway4: 192.168.18.1
       nameservers:
         addresses: [8.8.8.8, 4.4.4.4]
 EOT
@@ -83,12 +83,17 @@ mkdir /media/data/docker_server
 ln -s /media/data/docker_server /var/lib/docker
 #service docker start
 
+
+#Change the default "/tmp" folder
+mv /tmp /media/data/tmp
+ln -s /media/data/tmp /tmp
+
 #Add welcome message, before login
 cat <<EOT >> /etc/issue
 
   Welcome to environment to work with Docker. Access to the machine through IP 192.168.18.100 using:
 
      SSH   --> ssh docker@192.168.18.100
-     SAMBA --> \\192.168.18.100\docker_projects
+     SAMBA --> \\\\192.168.18.100\\docker_projects
 
 EOT
